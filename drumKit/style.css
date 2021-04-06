@@ -1,0 +1,28 @@
+body {
+    background-image: url("./drum.jpg");
+}
+.key-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+.key {
+    width: 50px;
+    height: 50px;
+    padding: 0.5em;
+    background-color: black;
+    opacity: 80%;
+    border: 2px solid black;
+    border-radius: 10%;
+    color: white;
+    transition: all 0.1s;
+}
+.key::first-letter {
+    font-size: xx-large;
+}
+.playing {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #ffc600;
+}
