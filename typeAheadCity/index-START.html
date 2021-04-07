@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+  function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+  }
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const places = [];
+  userInput = document.querySelector("input");
+  fetch(endpoint)
+    .then(blob => blob.json(blob))
+    .then(data => places.push(...data));
+  // console.log(places);
+  const suggestions = document.querySelector("ul");
+  userInput.addEventListener("keyup", () => {
+    removeAllChildNodes(suggestions);
+    for(place of places) {
+      // console.log(userInput.value)
+      if((place.city.toLowerCase().startsWith(userInput.value) || 
+      place.state.toLowerCase().startsWith(userInput.value))&& userInput.value != '')
+      {
+        console.log(place)
+        const regex = new RegExp(userInput.value, 'gi');
+        const cityName = place.city.replace(regex, `<span class="hl">${userInput.value}</span>`);
+        const stateName = place.state.replace(regex, `<span class="hl">${userInput.value}</span>`);
+        const placeNode = document.createElement("li");
+        const pop = document.createElement("span");
+        pop.classList.add("population");
+        pop.innerText = `${numberWithCommas(place.population)}`;
+        placeNode.innerHTML = `<span class="name">${cityName}, ${stateName}</span>`;
+        placeNode.appendChild(pop);
+        suggestions.append(placeNode);
+      }
+    }
+  });
+</script>
+</body>
+</html>
