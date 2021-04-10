@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    const p = document.querySelector('p');
+    function makeGreen() {
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("hi")
+    // Interpolated
+    console.log(`I am %s yay!`, "dyson")
+    console.log(`I am ${p.innerText} yay!`)
+    // Styled
+    console.log("%c Style me bro!", "font-size: 30px;")
+    // warning!
+    console.warn(`Watch out! ${p.innerText} is not what you want!`)
+    // Error :|
+    console.error("Error! This is really bad!")
+    // Info
+    console.info(p.innerText)
+    // Testing
+    console.assert(p.innerText == "xBreakxDownx", "This is not suppose to happen!")
+    // clearing
+    console.clear()
+    // Viewing DOM Elements
+    console.dir(p)
+    // Grouping together
+    console.group('p info')
+    console.log(p)
+    console.warn(p.innerHTML)
+    console.groupEnd('p info')
+    // counting
+    console.count('cody')
+    console.count('cody')
+    console.count('cody')
+    console.count('cody')
+    console.count('cody')
+    // timing
+    console.time('fetch')
+    fetch('https://www.dnd5eapi.co/api/spells')
+    .then(data => data.json())
+    .then(data => {
+      console.timeEnd('fetch');
+      console.dir(data);
+    })
+  </script>
+</body>
+</html>
