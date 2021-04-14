@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+  <style>
+    .show {
+      visibility: visible;
+    }
+    .hide {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <p>Tell me the passcode and you may pass...</p>
+  <p id="responsePhrase" class="hide">unset content</p>
+<script>
+  const responsePhrase = document.getElementById('responsePhrase');
+
+  const expectedSequence1 = ['a','b', 'c'];
+  const expectedSequence2 = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+  const expectedSequences = [expectedSequence1, expectedSequence2];
+
+  let counter = 0;
+  let keySequence = [];
+
+  const equals = (a, b) =>
+  a.length === b.length &&
+  a.every((v, i) => v === a[i]);
+
+  document.addEventListener("keydown", checkKeySequence);
+  function checkKeySequence(e) {
+    expectedSequences.forEach(expectedSequence => {
+      if(e.key === expectedSequence[keySequence.length]) {
+        keySequence.push(e.key);
+        if(keySequence.length === 1) {
+        setTimeout(() => {keySequence = [];}, 1000);
+        }
+        if(equals(keySequence, expectedSequence)) {
+          responsePhrase.className = "showing";
+          responsePhrase.innerText = getTextForSequence(expectedSequence);
+        }
+      }
+      else {
+        counter++;
+        if(counter >= expectedSequences.length) {
+          counter = 0;
+          keySequence = [];
+        }
+      }
+    });
+    counter = 0;
+
+  }
+
+  function getTextForSequence(sequence) {
+    return "You may pass";
+  }
+</script>
+</body>
+</html>
