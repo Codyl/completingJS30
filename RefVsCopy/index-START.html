@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+    let myString = "Cody";
+    let myNum = 1;
+    let myBool = false;
+
+    let newString = myString;
+    newString = "Kiara";
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    // You might think we can just do something like this:
+    // let myPlayers = players;
+    
+    // however what happens when we update that array?
+    // myPlayers[2] = "Bob";
+
+    // now here is the problem!
+
+    // oh no - we have edited the original array too!
+
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+
+    // one way
+    myPlayers = Array.from(players);
+    myPlayers[2] ="Mary";
+    // or create a new array and concat the old one in
+    let p2 = [].concat(players)
+    p2[2] = "Phil";
+    // or use the new ES6 Spread
+    let p3 = [...players];
+    p3[2] = "Spreadison";
+    // now when we update it, the original one isn't changed
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80,
+      friends : {
+        martin: "The first",
+        fartin: "THe worst"
+      }
+    };
+
+    // and think we make a copy:
+    // let myPerson = person;
+    // myPerson.name = "Will Bill";
+    // how do we take a copy instead?
+    let personClone = Object.assign({}, person, {name: "drake"})
+    // We will hopefully soon see the object ...spread
+    let os = {...person};
+    os.name = "sam"
+    let os2 = JSON.parse(JSON.stringify(person));
+    os2.name = "bilbo"
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    os.friends.martin = "The second";
+    os2.friends.martin = "The third";
+  </script>
+
+</body>
+</html>
