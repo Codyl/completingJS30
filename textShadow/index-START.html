@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+  const whoa = document.querySelector("h1");
+  window.addEventListener('mousemove', moveShadow);
+  function moveShadow(e) {
+    const shadowHorizonal = whoa.offsetWidth - e.clientX;
+    const shadowVertical = whoa.offsetHeight - e.clientY + parseInt(window.getComputedStyle(whoa).fontSize, 10);
+
+    whoa.style.textShadow = `${shadowHorizonal/8}px ${shadowVertical/8}px 10px red,
+    ${-shadowHorizonal/8}px ${-shadowVertical/8}px 10px green,
+    ${shadowVertical/8}px ${-shadowHorizonal/8}px 10px blue,
+    ${-shadowVertical/8}px ${shadowHorizonal/8}px 10px yellow`;
+  }
+</script>
+</body>
+</html>
